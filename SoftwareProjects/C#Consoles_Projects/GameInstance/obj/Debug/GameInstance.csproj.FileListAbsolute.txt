@@ -1,6 +1,0 @@
-C:\Users\Danh1\Desktop\SoftwareProjects\C#Consoles_Projects\GameInstance\obj\Debug\GameInstance.csprojAssemblyReference.cache
-C:\Users\Danh1\Desktop\SoftwareProjects\C#Consoles_Projects\GameInstance\obj\Debug\GameInstance.csproj.CopyComplete
-C:\Users\Danh1\Desktop\SoftwareProjects\C#Consoles_Projects\GameInstance\obj\Debug\GameInstance.dll
-C:\Users\Danh1\Desktop\SoftwareProjects\C#Consoles_Projects\GameInstance\obj\Debug\GameInstance.pdb
-C:\Users\Danh1\Desktop\SoftwareProjects\C#Consoles_Projects\GameInstance\GameInstance.dll
-C:\Users\Danh1\Desktop\SoftwareProjects\C#Consoles_Projects\GameInstance\GameInstance.pdb
