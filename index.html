@@ -10,7 +10,6 @@
         <meta name="theme-color" content="#344e41" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Hyperloop-Shuttle-Image-Engine</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="preload" href="./critical-style.css" /> <!-- Use preload to load any resources that are critical before page render (database connection) -->
         <link rel="preload" href="./db-connection.js" />
         <link rel="prefetch" href="" /> <!-- Any resources needed on the next page load can go here -->
@@ -20,40 +19,23 @@
     <body>
         <!-- Header -->
         <header>
-            <h1 class="text-center my-4">Imgur Image Explorer</h1>
+            <div class="header-content">
+                <h1>Imgur Image Explorer</h1>
+                <div class="search-bar">
+                    <input autofocus id="searchQueryInput" placeholder="imgur your imagination" type="text" name="q"/>
+                    <button id="searchButton">Explore</button>
+                </div>
+            </div>
         </header>
         <!-- Carousel Section -->
         <main class="container">
-            <input type="text" value="" placeholder="Imgur your imagination"/>
-            <div id="imgurCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
-                <!-- Indicators -->
-                <div class="carousel-indicators" id="carousel-indicators"></div>
-            
-                <!-- Carousel Inner -->
-                <div class="carousel-inner" id="carousel-inner">
-                    <!-- Carousel items will be dynamically added here -->
-                </div>
-            
-                <!-- Carousel Controls -->
-                <button class="carousel-control-prev" type="button" data-bs-target="#imgurCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#imgurCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+            <div class="carousel">
+                
             </div>
-            
         </main>
         <footer>
 
         </footer>
 
-        <!-- Bootstrap JS -->
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-        
-        
     </body>
 </html>
