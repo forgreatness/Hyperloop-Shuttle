@@ -1,85 +1,89 @@
-body {
-    font-family: Arial, sans-serif;
+body, html {
     margin: 0;
     padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100%;
+    box-sizing: border-box;
 }
 
 header {
     background-color: #344e41;
     color: white;
-    padding: 10px 20px;
-    /* display: flex;
-    justify-content: space-between;
-    align-items: center; */
-}
-
-.header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+    text-align: center;
+    padding: 20px;
 }
 
 .search-bar {
-    display: flex;
-    align-items: center;
+    margin-top: 10px;
 }
 
-.search-bar > #searchQueryInput {
-    padding: 5px;
-    margin-right: 10px;
-}
-
-.search-bar > button {
-    padding: 5px 10px;
-    background-color: #588157;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-.container { /*this is the main tag */
-    padding: 20px;
-    overflow: hidden;
+.container {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    height: calc(100vh - 180px); /* Adjust height based on header size */
 }
 
 .carousel {
     display: flex;
-    overflow: hidden;
-    position: relative;
-    flex: 1;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: 20px 0;
 }
 
 .carousel-item {
-    min-width: 100%;
-    transition: transform 0.5s ease
+    min-width: 200px;
+    margin-right: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    scroll-snap-align: start;
+    position: relative;
 }
 
-.carousel img {
+.carousel-item img {
     width: 100%;
     height: auto;
-    object-fit: fill;
+    display: block;
+    border-bottom: 1px solid #ddd;
 }
+
+.description {
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
 .carousel-indicators {
     display: flex;
     justify-content: center;
-    position: absolute;
-    bottom: 10px;
-    width: 100%;
+    margin-top: 10px;
 }
 
 .carousel-indicators button {
-    background-color: #ccc;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    height: 10px;
-    margin: 0 5px;
     width: 10px;
+    height: 10px;
+    background-color: #ccc;
+    border-radius: 50%;
+    margin: 0 5px;
+    border: none;
+    cursor: pointer;
 }
 
 .carousel-indicators button.active {
-    background-color: #588157;
+    background-color: #344e41;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #344e41;
+    color: white;
+}
+
+@media screen and (max-width: 600px) {
+    .carousel-item {
+        min-width: 150px;
+    }
 }
