@@ -6,6 +6,8 @@ async function getQueryImages(query) {
     const url = `${IMGUR_API_ORIGIN}/?q=${encodeURIComponent(query)}`;
 
     try {
+        loadingSpinner.style.display = 'block';
+
         const response = await fetch(url, {
             method: 'GET',
             headers: {
@@ -22,6 +24,8 @@ async function getQueryImages(query) {
     } catch (e) {
         console.log("There was an issue with retrieving images, ", e);
         throw e;
+    } finally {
+        loadingSpinner.style.display = 'none';
     }
 }
 
@@ -30,8 +34,9 @@ let exploreButton = document.getElementById('exploreButton');
 let exploreInput = document.getElementById('searchQueryInput');
 let carousel = document.querySelector('.carousel');
 let indicators = document.getElementsByClassName('carousel-indicators').item(0);
+let loadingSpinner = document.getElementById('loadingSpinner');
 let currentImages = [];
-let currentCenterIndex = 2; // Start with the third image as the center (index 2)
+let currentActiveIndex;
 
 if (exploreButton) {
     exploreButton.addEventListener('click', async function onExploreClick(e) {
@@ -41,6 +46,7 @@ if (exploreButton) {
             let images = await getQueryImages(exploreQuery);
             images = getAllValidImage(images);
             currentImages = images;
+            currentActiveIndex = currentImages.length < 2 ? 0 : 1;
 
             displayImages(currentImages);
         }
@@ -62,20 +68,39 @@ function getAllValidImage(images = []) {
 // Modify the function to display only 5 images centered around the current center index
 function displayImages(images) {
     carousel.innerHTML = ''; // Clear previous results
+    let start, end;
 
-    // Ensure we have at least 5 images, otherwise show all images
-    const start = Math.max(currentCenterIndex - 2, 0);
-    const end = Math.min(currentCenterIndex + 3, images.length); // Show 5 images centered on currentCenterIndex
+    if (currentActiveIndex === currentImages.length - 1) {
+        start = Math.max(currentActiveIndex - 2, 0);
+        end = currentActiveIndex + 1;
+    } else {
+        start = Math.max(currentActiveIndex - 1, 0);
+        end = Math.min(start + 3, currentImages.length);
+    }
 
     const visibleImages = images.slice(start, end);
 
     visibleImages.forEach((image, index) => {
+        console.log("what is the image content, ", image);
         const item = document.createElement('div');
         item.classList.add('carousel-item');
-        if (index === 2) item.classList.add('active'); // Middle image is active
+        if (index === currentActiveIndex) item.classList.add('active'); // Middle image is active
 
         const img = document.createElement('img');
         img.src = image.images[0].link;
+        img.loading = 'lazy';
+        img.alt = image.images[0]?.description || 'Image';
+
+        img.addEventListener('click', function() {
+            Swal.fire({
+                title: image?.title ?? "Untitled",
+                text: image.images[0]?.description || 'No description available',
+                imageUrl: this.src,
+                imageWidth: 800,
+                imageAlt: 'Image',
+                confirmButtonText: 'Close'
+            });
+        });
 
         const description = document.createElement('div');
         description.classList.add('description');
@@ -86,7 +111,7 @@ function displayImages(images) {
         carousel.appendChild(item);
     });
 
-    createIndicators(images.length);
+    createIndicators(visibleImages.length);
 }
 
 // Modify the indicators function to handle re-centering / or update indicator if it already exist
@@ -99,17 +124,25 @@ function createIndicators(count) {
 
     // Clear the indicators content for now until we figure out how to replace it efficiently
     indicators.innerHTML = "";
+    let start, end;
 
-    const start = Math.max(currentCenterIndex - 2, 0);
-    const end = Math.min(currentCenterIndex + 3, count);
+    if (currentActiveIndex === currentImages.length-1) {
+        start = Math.max(currentActiveIndex - (count - 1), 0);
+        end = Math.min(start + count, currentImages.length);
+    } else {
+        start = Math.max(currentActiveIndex - 1, 0);
+        end = Math.min(start + count, currentImages.length);
+    }
 
     // Create indicators for the currently visible 5 images
     for (let i = start; i < end; i++) {
         const button = document.createElement('button');
-        if (i === currentCenterIndex) button.classList.add('active');
+        if (i === currentActiveIndex) button.classList.add('active');
         
         button.addEventListener('click', () => {
-            currentCenterIndex = i; // Update the center to the clicked index
+            if (currentActiveIndex === i) return;
+
+            currentActiveIndex = i; // Update the center to the clicked index
             displayImages(currentImages); // Re-display the images with the new center
         });
 
