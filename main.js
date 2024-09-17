@@ -40,17 +40,27 @@ let currentActiveIndex;
 
 if (exploreButton) {
     exploreButton.addEventListener('click', async function onExploreClick(e) {
-        let exploreQuery = exploreInput?.value ?? "";
+        exploreAndProcess();
+    });
 
-        if (exploreQuery) {
-            let images = await getQueryImages(exploreQuery);
-            images = getAllValidImage(images);
-            currentImages = images;
-            currentActiveIndex = currentImages.length < 2 ? 0 : 1;
-
-            displayImages(currentImages);
+    exploreInput.addEventListener('keyup', function (e) {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            exploreAndProcess();
         }
     });
+}
+
+async function exploreAndProcess() {
+    let exploreQuery = exploreInput?.value ?? "";
+
+    if (exploreQuery) {
+        let images = await getQueryImages(exploreQuery);
+        images = getAllValidImage(images);
+        currentImages = images;
+        currentActiveIndex = currentImages.length < 2 ? 0 : 1;
+
+        displayImages(currentImages);
+    }
 }
 
 function getAllValidImage(images = []) {
